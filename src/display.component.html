@@ -1,5 +1,5 @@
-<div>
-    <div id="buttons-left">
+<div [class.nocursor]="hideControls">
+    <div id="buttons-left" [hidden]="hideControls">
         <button mat-mini-fab color="basic" [disabled]="timerConn" matTooltip="Connect to Timer"
             (click)="onConnectTimer()">
             <mat-icon>bluetooth</mat-icon>
@@ -10,7 +10,7 @@
             <mat-icon>bluetooth_disabled</mat-icon>
         </button>
     </div>
-    <div id="buttons-right">
+    <div id="buttons-right" [hidden]="hideControls">
         <button mat-mini-fab color="basic" matTooltip="Enter fullscreen mode" (click)="onEnterFullscreen()">
             <mat-icon>fullscreen</mat-icon>
         </button>

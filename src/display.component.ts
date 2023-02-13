@@ -1,12 +1,12 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { connectGanTimer, GanTimerConnection, GanTimerEvent, GanTimerState, GanTimerTime } from 'gan-web-bluetooth';
-import { interval, Subscription } from 'rxjs';
+import { debounceTime, fromEvent, interval, merge, tap, Subscription } from 'rxjs';
 
 const ZERO_TIME: GanTimerTime = {
     minutes: 0,
@@ -34,13 +34,25 @@ const LCD_COLOR_GET_SET = 'lime';
     templateUrl: './display.component.html',
     imports: [MatIconModule, MatButtonModule, MatTooltipModule]
 })
-export class TimerDisplay {
+export class TimerDisplay implements OnInit {
 
     lcdColor: string = LCD_COLOR;
     lcdTime: GanTimerTime = ZERO_TIME;
 
     timerConn?: GanTimerConnection;
     localTimerSub?: Subscription;
+
+    hideControls: boolean = false;
+
+    ngOnInit(): void {
+        merge(
+            fromEvent(document, "touchstart"),
+            fromEvent(document, "mousemove")
+        ).pipe(
+            tap(() => this.hideControls = false),
+            debounceTime(5000)
+        ).subscribe(() => this.hideControls = true);
+    }
 
     onEnterFullscreen() {
         document.documentElement.requestFullscreen();

@@ -5,6 +5,7 @@ body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+    user-select: none;
 }
 
 @font-face {
@@ -24,6 +25,10 @@ body {
     float: right;
 }
 
+button {
+    z-index: 10;
+}
+
 #lcd-time {
     position: absolute;
     top: 0;
@@ -36,8 +41,6 @@ body {
     justify-content: center;
     font-size: 30vw;
     font-family: lcd;
-    color: white;
-    z-index: -1;
 }
 
 #lcd-time .delimiter {
@@ -50,4 +53,8 @@ body {
 
 .disconnected {
     opacity: 10%;
+}
+
+.nocursor {
+    cursor: none;
 }
