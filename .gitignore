@@ -1,0 +1,34 @@
+# Generated output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+node_modules
+
+# IDE, Editors, Local configs
+.vscode/
+.history/
+*~
+*.sw?
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.npmrc
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/typings
+
+# Common
+*.log
+*.bak
+*.tmp
+.DS_Store
+Thumbs.db

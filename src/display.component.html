@@ -1,0 +1,31 @@
+<div>
+    <div id="buttons-left">
+        <button mat-mini-fab color="basic" [disabled]="timerConn" matTooltip="Connect to Timer"
+            (click)="onConnectTimer()">
+            <mat-icon>bluetooth</mat-icon>
+        </button>
+        &nbsp;
+        <button mat-mini-fab color="basic" [disabled]="!timerConn" matTooltip="Disconnect from Timer"
+            (click)="onDisconnectTimer()">
+            <mat-icon>bluetooth_disabled</mat-icon>
+        </button>
+    </div>
+    <div id="buttons-right">
+        <button mat-mini-fab color="basic" matTooltip="Enter fullscreen mode" (click)="onEnterFullscreen()">
+            <mat-icon>fullscreen</mat-icon>
+        </button>
+        &nbsp;
+        <button mat-mini-fab color="basic" matTooltip="Exit fullscreen mode" (click)="onExitFullscreen()">
+            <mat-icon>fullscreen_exit</mat-icon>
+        </button>
+    </div>
+    <div id="lcd-time" [style.color]="lcdColor" [class.disconnected]="!timerConn">
+        <div>
+            <span class="min">{{ lcdTime.minutes }}</span>
+            <span class="delimiter">:</span>
+            <span class="sec">{{ lcdTime.seconds.toString(10).padStart(2,'0') }}</span>
+            <span class="delimiter">.</span>
+            <span class="msec">{{ lcdTime.milliseconds.toString(10).padStart(3, '0') }}</span>
+        </div>
+    </div>
+</div>
