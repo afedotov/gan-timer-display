@@ -18,7 +18,10 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
-    "types": [],
+    "types": [
+      "dom-screen-wake-lock",
+      "web-bluetooth"
+    ],
     "lib": [
       "ES2022",
       "DOM"
