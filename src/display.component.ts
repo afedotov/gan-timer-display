@@ -5,24 +5,23 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { connectGanTimer, GanTimerConnection, GanTimerEvent, GanTimerState, GanTimerTime } from 'gan-web-bluetooth';
 import { debounceTime, fromEvent, interval, merge, tap, Subscription } from 'rxjs';
 
-const ZERO_TIME: GanTimerTime = {
-    minutes: 0,
-    seconds: 0,
-    milliseconds: 0,
-    asTimestamp: 0
-};
+import {
+    connectGanTimer,
+    makeTimeFromTimestamp,
+    GanTimerConnection,
+    GanTimerEvent,
+    GanTimerState,
+    GanTimerTime
+} from 'gan-web-bluetooth';
 
-function mktime(ts: number): GanTimerTime {
-    return {
-        minutes: Math.trunc(ts / 60000),
-        seconds: Math.trunc(ts % 60000 / 1000),
-        milliseconds: Math.trunc(ts % 1000),
-        asTimestamp: ts
-    };
-}
+const ZERO_TIME: GanTimerTime = makeTimeFromTimestamp(0);
+
+const now: () => number =
+    typeof window.performance?.now == 'function' ?
+        () => Math.floor(window.performance.now()) :
+        () => Date.now();
 
 const LCD_COLOR = 'white';
 const LCD_COLOR_HANDS_ON = 'red';
@@ -45,6 +44,7 @@ export class TimerDisplay implements OnInit {
     hideControls: boolean = false;
 
     ngOnInit(): void {
+        // hide control buttons if mouse doesn't move for 5sec
         merge(
             fromEvent(document, "touchstart"),
             fromEvent(document, "mousemove")
@@ -68,10 +68,10 @@ export class TimerDisplay implements OnInit {
     }
 
     startLocalTimer() {
-        var startTime = Date.now();
+        var startTime = now();
         this.lcdTime = ZERO_TIME;
         this.localTimerSub = interval(90).subscribe(() => {
-            this.lcdTime = mktime(Date.now() - startTime);
+            this.lcdTime = makeTimeFromTimestamp(now() - startTime);
         });
     }
 
